@@ -3,7 +3,7 @@ import type { Mission, RepositoryState } from '../types/game'
 
 const base=()=>createBaseState()
 const withState=(patch:Partial<RepositoryState>)=>Object.assign(base(),patch)
-const cmd=(pattern:RegExp)=>(_:RepositoryState,h:string[])=>h.some(x=>pattern.test(x))
+const cmd=(pattern:RegExp)=>(_:RepositoryState,h:string[])=>pattern.test(h[h.length-1]??'')
 const branch=(name:string)=>(s:RepositoryState)=>s.currentBranch===name
 const remoteBranch=(name:string)=>(s:RepositoryState)=>Boolean(s.remoteBranches[`origin/${name}`])
 const clean=(s:RepositoryState)=>s.files.every(f=>!['modified','staged','untracked','deleted'].includes(f.state))
