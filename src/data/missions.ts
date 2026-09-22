@@ -18,7 +18,35 @@ export const levelInfo=[
  {level:4,title:'GitHub Collaboration',caption:'gh auth, issue, PR, merge'},
  {level:5,title:'Embedded Release',caption:'Tag, release, artifact firmware'}]
 
-export const missions:Mission[]=[
+const commandSequences:Record<string,string[]>={
+ 'L1-M01':['git init','git status'],
+ 'L1-M02':['git status','git add .','git commit -m "chore: initial firmware project"'],
+ 'L1-M03':['git status','git add Core/Src/main.c','git add .gitignore','git commit -m "chore: ignore build artifacts"'],
+ 'L1-M04':['git diff','git diff --staged'],
+ 'L1-M05':['git status','git add Drivers/BME280/bme280.c','git commit -m "feat: add BME280 driver"'],
+ 'L2-M01':['git branch','git switch -c feature/bme280'],
+ 'L2-M02':['git push -u origin feature/bme280'],
+ 'L2-M03':['git fetch origin','git log'],
+ 'L2-M04':['git status','git pull origin main'],
+ 'L2-M05':['git switch main','git merge feature/calibration','git branch -d feature/calibration'],
+ 'L3-M01':['git restore --staged config/device-secret.env','git status'],
+ 'L3-M02':['git reset --soft HEAD~1'],
+ 'L3-M03':['git revert c1'],
+ 'L3-M04':['git stash','git switch main'],
+ 'L3-M05':['git merge conflict-demo','git merge --abort'],
+ 'L4-M01':['gh auth status','gh auth login'],
+ 'L4-M02':['gh issue create --title "fix: UART timeout"'],
+ 'L4-M03':['gh pr create --title "feat: low power mode"'],
+ 'L4-M04':['gh pr status','gh pr merge 1 --merge'],
+ 'L4-M05':['gh pr close 1'],
+ 'L5-M01':['git tag v1.0.0'],
+ 'L5-M02':['gh release create v1.0.0 --title "v1.0.0"'],
+ 'L5-M03':['gh release upload v1.0.0 build/firmware.bin'],
+ 'L5-M04':['git tag -d v1.1.0','git tag v1.1.0'],
+ 'L5-M05':['git tag v2.0.0','gh release create v2.0.0 --title "v2.0.0"','gh release upload v2.0.0 build/firmware.bin']
+}
+
+const missionCatalog:Mission[]=[
  {id:'L1-M01',level:1,title:'Repository Pertama',subtitle:'Inisialisasi folder firmware kosong',mode:'tutorial',briefing:'Folder project baru belum menjadi repository Git. Inisialisasikan lalu verifikasi statusnya.',initialState:withState({initialized:false,branches:{},commits:{},files:[{path:'README.md',state:'untracked'}],remotes:{},remoteBranches:{},upstream:undefined}),xp:80,hints:['Mulai dengan membuat metadata repository Git.','Command yang Anda cari adalah git init.','Setelah itu, selalu verifikasi dengan git status.'],objectives:[{id:'init',label:'Inisialisasi repository',check:s=>s.initialized},{id:'observe',label:'Periksa status repository',check:cmd(/^git status/)}]},
  {id:'L1-M02',level:1,title:'Source Code yang Sudah Ada',subtitle:'Stage dan commit project existing',mode:'tutorial',briefing:'Source firmware sudah ada tetapi belum pernah di-commit. Masukkan source ke staging dan buat commit awal.',initialState:withState({files:[{path:'Core/Src/main.c',state:'untracked'},{path:'Drivers/uart.c',state:'untracked'},{path:'README.md',state:'untracked'},{path:'build/fw.bin',state:'ignored'}]}),xp:100,hints:['Periksa status sebelum stage.','Anda dapat menggunakan git add . untuk file yang tidak di-ignore.','Buat commit dengan pesan yang menjelaskan commit awal.'],objectives:[{id:'status',label:'Observasi working tree',check:cmd(/^git status/)},{id:'stage',label:'Stage source code',check:s=>s.files.filter(f=>!f.path.startsWith('build/')).every(f=>f.state==='staged'||f.state==='clean')},{id:'commit',label:'Buat commit awal',check:s=>Object.keys(s.commits).length>1}]},
  {id:'L1-M03',level:1,title:'Jangan Commit Build Artifact',subtitle:'.gitignore untuk embedded',mode:'challenge',briefing:'Binary hasil build tidak boleh masuk history. Pastikan build/ tetap ignored dan commit hanya source.',initialState:withState({files:[{path:'Core/Src/main.c',state:'modified'},{path:'build/firmware.bin',state:'ignored'},{path:'build/firmware.elf',state:'ignored'},{path:'.gitignore',state:'modified'}]}),xp:120,hints:['Periksa status dan file ignored.','Stage source dan .gitignore, bukan build/.','Commit perubahan setelah staging aman.'],objectives:[{id:'inspect',label:'Periksa kondisi file',check:cmd(/^git status/)},{id:'commit',label:'Commit tanpa build artifact',check:s=>Object.keys(s.commits).length>1&&s.files.filter(f=>f.path.startsWith('build/')).every(f=>f.state==='ignored')}]},
@@ -49,5 +77,10 @@ export const missions:Mission[]=[
  {id:'L5-M04',level:5,title:'Pindahkan Tag',subtitle:'Release terlanjur menunjuk commit lama',mode:'challenge',briefing:'v1.1.0 terlanjur menunjuk c1, tetapi fix final ada di c2. Hapus tag lama lalu buat v1.1.0 pada c2.',initialState:(()=>{const s=base();s.commits.c1={id:'c1',message:'release candidate',parent:'c0'};s.commits.c2={id:'c2',message:'fix: final calibration',parent:'c1'};s.branches.main='c2';s.tags['v1.1.0']='c1';s.releases=[{tag:'v1.1.0',title:'v1.1.0',assets:['build/firmware.bin']}];return s})(),xp:180,hints:['Tag lokal dapat dihapus dengan git tag -d.','Setelah dihapus, buat ulang tag pada commit yang benar.','HEAD main sudah berada di c2.'],objectives:[{id:'tag-moved',label:'Arahkan v1.1.0 ke c2',check:s=>s.tags['v1.1.0']==='c2'}]},
  {id:'L5-M05',level:5,title:'Release Engineer Challenge',subtitle:'Tag + release + binary final',mode:'challenge',briefing:'Firmware v2.0.0 sudah stabil. Buat tag, release, dan upload binary firmware. Ini adalah challenge akhir v1.',initialState:(()=>{const s=base();s.authenticated=true;s.commits.c1={id:'c1',message:'feat: production telemetry',parent:'c0'};s.branches.main='c1';s.files=[{path:'build/firmware.bin',state:'ignored'},{path:'build/firmware.hex',state:'ignored'}];return s})(),xp:250,hints:['Urutan aman: tag → release → asset.','Buat v2.0.0 pada HEAD.','Upload build/firmware.bin ke release.'],objectives:[{id:'tag',label:'Buat tag v2.0.0',check:hasTag('v2.0.0')},{id:'release',label:'Buat release v2.0.0',check:hasRelease('v2.0.0')},{id:'asset',label:'Upload binary firmware',check:asset('v2.0.0','build/firmware.bin')}]}
 ]
+
+export const missions:Mission[]=missionCatalog.map(mission=>({
+ ...mission,
+ hints:mission.hints.map((hint,index)=>index===mission.hints.length-1?`${hint} Perintah: ${commandSequences[mission.id].join(' → ')}`:hint)
+}))
 
 export const missionById=(id:string)=>missions.find(m=>m.id===id)??missions[0]
