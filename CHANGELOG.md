@@ -1,5 +1,23 @@
 # Changelog
 
+## [1.2.0] - 2026-09-22
+
+### Added
+
+- Modal sukses di tengah layar dengan navigasi ke misi berikutnya.
+- Auto-focus input command dan auto-scroll internal terminal.
+- Regression test untuk urutan objective dan kompatibilitas autosave lama.
+
+### Changed
+
+- Objective di seluruh learning path sekarang wajib diselesaikan secara berurutan.
+- Area history terminal memiliki tinggi terbatas dan dapat di-scroll.
+
+### Fixed
+
+- Command yang dijalankan sebelum objective terbuka tidak lagi dihitung.
+- Progress objective lama yang tidak berurutan dinormalisasi secara otomatis.
+
 ## [1.1.0] - 2026-09-22
 
 ### Added
