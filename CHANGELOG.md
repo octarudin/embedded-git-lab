@@ -1,17 +1,13 @@
 # Changelog
 
-Semua perubahan penting pada project akan dicatat di file ini.
-
-Format mengacu pada Keep a Changelog dan versi mengikuti Semantic Versioning saat project mulai dirilis.
-
-## [Unreleased]
+## [1.0.0] - 2026-09-22
 
 ### Added
-- Struktur repository awal.
-- Product Vision dan Scope v1.
-- Template dokumentasi SDLC lanjutan.
-- React + TypeScript + Vite + Tailwind scaffold.
-- Git simulator prototype.
-- Autosave lokal sederhana.
-- Test awal simulator.
-- GitHub Actions untuk CI dan deployment GitHub Pages.
+- 25 mission dalam 5 learning level.
+- Stateful Git/GitHub CLI simulator untuk workflow utama v1.
+- Terminal simulator, branch/repository state, virtual file explorer.
+- XP, hint, achievement, autosave, resume, checkpoint, dan reset.
+- Embedded release workflow: tag, release, binary artifact.
+- Automated tests, lint/typecheck/build scripts.
+- CI dan GitHub Pages deployment workflow.
+- Dokumentasi SDLC lengkap untuk v1.

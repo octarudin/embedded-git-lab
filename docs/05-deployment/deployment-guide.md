@@ -1,10 +1,15 @@
 # Deployment Guide
 
+## Local build
+```bash
+npm install --no-audit --no-fund
+npm run check
+```
+
 ## GitHub Pages
+1. Push repository ke GitHub.
+2. Settings → Pages → Source: **GitHub Actions**.
+3. Push ke `main` atau jalankan workflow `Deploy GitHub Pages` secara manual.
+4. Workflow build dan deploy `dist/`.
 
-1. Push repository ke GitHub dengan nama `embedded-git-lab`.
-2. Buka **Settings → Pages**.
-3. Pilih **Source: GitHub Actions**.
-4. Push ke branch `main` akan menjalankan workflow deployment.
-
-Vite dikonfigurasi dengan `base: '/embedded-git-lab/'`.
+`vite.config.ts` menggunakan base `/embedded-git-lab/` pada production agar asset path sesuai project Pages.

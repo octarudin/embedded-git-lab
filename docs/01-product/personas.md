@@ -1,12 +1,10 @@
 # Personas
 
-> Status: Draft — akan diperdalam setelah User Stories.
+## Raka — Mahasiswa Embedded
+Sudah bisa C dasar, memakai STM32/ESP32, tetapi Git sebatas `clone`, `add`, `commit`, `push`. Tujuan: memahami branch, remote, dan recovery tanpa takut merusak repo.
 
-## Persona A — Embedded Beginner
-Baru menggunakan Git CLI dan membutuhkan latihan aman untuk memahami state repository.
+## Dina — Junior Firmware Engineer
+Bekerja dalam tim dan mulai memakai PR/release. Sering bingung saat local branch tertinggal, salah stage, atau release artifact keliru. Tujuan: workflow kolaborasi yang aman.
 
-## Persona B — Mahasiswa
-Belajar embedded/IoT dan perlu workflow version control yang relevan dengan project praktikum.
-
-## Persona C — Engineer yang Beralih Workflow
-Sudah membuat firmware tetapi sebelumnya mengandalkan copy-folder atau Git GUI.
+## Bimo — Engineer Migrasi dari GUI
+Terbiasa tool GUI dan copy folder sebagai backup. Tujuan: memahami model mental Git CLI dan membaca state repository dengan percaya diri.

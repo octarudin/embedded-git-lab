@@ -1,14 +1,17 @@
 ---
 name: Bug report
-about: Laporkan bug pada aplikasi, simulator, atau mission
+about: Laporkan masalah pada game/simulator
 ---
 
-## Bug
+## Ringkasan
 
-## Langkah Reproduksi
+## Langkah reproduksi
+1.
+2.
+3.
 
-## Hasil yang Diharapkan
+## Hasil yang diharapkan
 
-## Hasil Aktual
+## Hasil aktual
 
-## Browser/OS
+## Browser / OS
