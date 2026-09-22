@@ -1,7 +1,7 @@
 name: Deploy GitHub Pages
 on:
   push:
-    branches: ['main']
+    branches: [main]
   workflow_dispatch:
 permissions:
   contents: read
@@ -19,13 +19,12 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - run: npm install
-      - run: npm test
-      - run: npm run build
+      - run: npm install --no-audit --no-fund
+      - run: npm run check
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: ./dist
+          path: dist
   deploy:
     environment:
       name: github-pages

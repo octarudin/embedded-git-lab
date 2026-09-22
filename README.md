@@ -1,84 +1,65 @@
 # Embedded Git Lab
 
-Game pembelajaran Git dan GitHub CLI berbasis web untuk developer embedded, dengan terminal simulator, skenario nyata, dan latihan workflow version control.
+**Embedded Git Lab** adalah game pembelajaran Git dan GitHub CLI berbasis web untuk developer embedded. Pemain belajar melalui skenario repository nyata, terminal simulator, objective berbasis state, dan workflow firmware dari commit hingga GitHub Release.
 
-## Status
+## Fitur v1.0.0
 
-**v0.1.0 — Project scaffold / SDLC foundation**
+- 5 level, 25 misi tutorial/challenge berbahasa Indonesia.
+- Simulator `git` dan `gh` yang aman, seluruhnya berjalan di browser.
+- Terminal interaktif, repository state, branch view, dan virtual file explorer.
+- Pola belajar **observasi → target → command → verifikasi**.
+- XP, hint, achievement ringan, autosave, resume, checkpoint, reset mission.
+- Skenario embedded: source, build artifact, secret, tag, release, `.bin`, `.hex`.
+- Tanpa backend dan tanpa akses ke Git/repository asli pengguna.
+- Siap di-deploy sebagai static site ke GitHub Pages.
 
-Versi ini berisi fondasi repository, dokumentasi awal, simulator Git prototype, autosave browser, test awal, dan workflow GitHub Pages.
-
-## Prinsip Pembelajaran
-
-**Observasi kondisi → Tentukan target → Pilih command → Jalankan → Cek hasil → Lanjut**
-
-## Stack
-
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- Vitest
-- Browser local storage
-- GitHub Pages
-
-## Menjalankan Lokal
+## Menjalankan secara lokal
 
 ```bash
 npm install
 npm run dev
 ```
 
-Build produksi:
+Verifikasi penuh:
+
+```bash
+npm run check
+```
+
+Build production:
 
 ```bash
 npm run build
+npm run preview
 ```
 
-Test:
-
-```bash
-npm test
-```
-
-## Prototype Command
-
-Simulator awal mendukung:
-
-```bash
-git status
-git branch
-git switch -c feature/bme280
-```
-
-Dukungan command akan berkembang mengikuti mission catalog dan simulator design.
-
-## Struktur SDLC
-
-1. Product Vision
-2. Scope
-3. User Stories
-4. Requirements
-5. Game Design
-6. Simulator Design
-7. Architecture
-8. Test Strategy
-9. Implementation
-10. Deployment
-11. Changelog / Maintenance
-
-Dokumentasi berada di folder [`docs/`](docs/).
-
-## Deployment
-
-Repository disiapkan untuk GitHub Pages dengan base path:
+## Struktur
 
 ```text
-/embedded-git-lab/
+src/
+  components/      UI reusable
+  data/            katalog misi
+  engine/          simulator Git/GitHub
+  hooks/           autosave browser
+docs/              dokumentasi SDLC
+tests/             automated test
+.github/workflows/  CI dan GitHub Pages
 ```
 
-Aktifkan GitHub Pages dengan **Source: GitHub Actions**.
+## Privasi dan keamanan
 
-## License
+Aplikasi tidak menjalankan shell asli, tidak membaca repository lokal, dan tidak mengakses akun GitHub pemain. Semua repository, issue, pull request, tag, release, serta binary artifact merupakan data simulasi di browser. Progress disimpan pada `localStorage` browser.
 
-MIT License.
+## Repository metadata
+
+Description: `Game pembelajaran Git dan GitHub CLI berbasis web untuk developer embedded, dengan terminal simulator, skenario nyata, dan latihan workflow version control.`
+
+Topics: `git`, `github`, `github-cli`, `git-learning`, `git-simulator`, `embedded-systems`, `firmware`, `education`, `learning-game`, `react`, `typescript`, `vite`, `version-control`, `indonesia`, `open-source`.
+
+## Dokumentasi
+
+Mulai dari [`docs/01-product/product-vision.md`](docs/01-product/product-vision.md), lalu ikuti nomor folder SDLC.
+
+## Lisensi
+
+MIT. Lihat [LICENSE](LICENSE).

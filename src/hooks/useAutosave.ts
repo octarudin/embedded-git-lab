@@ -1,2 +1,7 @@
-import { useEffect,useState } from 'react'
-export function useAutosave<T>(key:string,initialValue:T){const [value,setValue]=useState<T>(()=>{const saved=localStorage.getItem(key);if(!saved)return initialValue;try{return JSON.parse(saved) as T}catch{return initialValue}});useEffect(()=>{localStorage.setItem(key,JSON.stringify(value))},[key,value]);return[value,setValue] as const}
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+export function useAutosave<T>(key:string,initial:T):[T,Dispatch<SetStateAction<T>>,()=>void]{
+ const [value,setValue]=useState<T>(()=>{try{const raw=localStorage.getItem(key);return raw?JSON.parse(raw):initial}catch{return initial}})
+ useEffect(()=>{localStorage.setItem(key,JSON.stringify(value))},[key,value])
+ const clear=()=>{localStorage.removeItem(key);setValue(initial)}
+ return [value,setValue,clear]
+}

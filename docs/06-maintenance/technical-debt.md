@@ -1,9 +1,16 @@
 # Technical Debt
 
-> Status: Active log.
+## TD-01 Parser monolitik
+`runGitCommand` masih satu modul besar. Target refactor: command registry per family (`branch`, `remote`, `release`) ketika command set bertambah.
 
-Gunakan file ini untuk mencatat shortcut teknis yang disengaja, dampaknya, serta rencana penyelesaiannya.
+## TD-02 Mission functions in source
+Objective evaluator adalah function TypeScript sehingga mission tidak dapat langsung di-author dari JSON. Target: predicate DSL/data-driven evaluator.
 
-| ID | Area | Debt | Dampak | Rencana |
-|---|---|---|---|---|
-| TD-001 | Persistence | Prototype baru memakai localStorage | Belum cocok untuk state besar/checkpoint kompleks | Evaluasi IndexedDB saat architecture final |
+## TD-03 Simplified graph
+Commit hanya memiliki satu parent dalam model v1. Target: multi-parent graph untuk merge visual akurat.
+
+## TD-04 Persistence schema migration
+Belum ada versioned migration selain key `v1`. Target: schema version + migration layer sebelum v2/cloud sync.
+
+## TD-05 E2E coverage
+v1 automated test fokus engine/catalog. Target: Playwright end-to-end untuk terminal, persistence, dan mission completion.
