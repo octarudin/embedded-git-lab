@@ -1,5 +1,10 @@
 # Changelog
 
+## [1.0.1] - 2026-09-22
+
+### Fixed
+- Terminal auto-scroll tidak lagi menggulir seluruh halaman dan menyebabkan tampilan terlihat blank.
+
 ## [1.0.0] - 2026-09-22
 
 ### Added
